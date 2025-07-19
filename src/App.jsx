@@ -18,7 +18,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
-  const [viewFilter, setViewFilter] = useState("all"); // all | top | bottom
+  const [viewFilter, setViewFilter] = useState("all"); 
   const [userLocation, setUserLocation] = useState(null);
   const [showMap, setShowMap] = useState(false);
   const [locationFilter, setLocationFilter] = useState(false);
@@ -26,7 +26,7 @@ function App() {
   const [nearbyJobs, setNearbyJobs] = useState([]);
   const [showNearbyJobs, setShowNearbyJobs] = useState(false);
 
-  // Lógica para calcular top10 y bottom10 salarios
+  
   const calcularTopYBottom = (data) => {
     const dataConSalario = data.map((item) => {
       const salarioStr = item.sueldo || "";
@@ -66,14 +66,14 @@ function App() {
     setViewFilter("all");
 
     try {
-      // Intentar obtener datos del servidor de scraping primero
+      
       const response = await fetch(`http://localhost:3000/api/vacantes?busqueda=${query.toLowerCase()}`);
       if (response.ok) {
         const data = await response.json();
         console.log('📊 Datos recibidos del servidor:', data);
         console.log('📊 Total de datos en data.data:', data.data?.length || 0);
         
-        // NO filtrar aquí, usar todos los datos que vienen del servidor
+        
         const allResults = data.data || [];
         console.log('📊 Resultados sin filtrar:', allResults.length);
         
@@ -83,7 +83,7 @@ function App() {
         console.log('📊 Resultados finales establecidos:', allResults.length);
       } else {
         console.log('❌ Servidor respondió con error, usando datos locales...');
-        // Fallback a datos locales
+        
         const localResults = await searchJobs(query);
         setResults(localResults);
         calcularTopYBottom(localResults);
@@ -114,13 +114,12 @@ function App() {
     setSelectedJob(jobData.job);
     
     try {
-      // Obtener todos los empleos disponibles
+     
       const allJobs = await getAllJobs();
       
-      // Obtener empleos del mismo estado
+     
       const estadoJobs = getJobsByEstado(jobData.estado, allJobs);
       
-      // Filtrar para excluir el empleo seleccionado
       const filteredJobs = estadoJobs.filter(job => 
         job.titulo !== jobData.job.titulo
       );
@@ -139,15 +138,14 @@ function App() {
     setShowNearbyJobs(false);
   };
 
-  // Función para obtener distancia (mantener compatibilidad)
+  
   const getDistance = (ciudadModalidad) => {
     if (!userLocation || !ciudadModalidad) return null;
     
-    // Importar las funciones del servicio
     const estado = obtenerEstado(ciudadModalidad);
     const coords = getCoordinatesForEstado(estado);
     
-    const R = 6371; // Radio de la Tierra en km
+    const R = 6371; 
     const dLat = (coords[0] - userLocation.lat) * Math.PI / 180;
     const dLon = (coords[1] - userLocation.lng) * Math.PI / 180;
     const a = 
@@ -238,41 +236,7 @@ function App() {
         </div>
       )}
 
-      {/* Debug info - Temporal */}
-      {hasSearched && !loading && (
-        <div style={{ 
-          background: 'rgba(255, 193, 7, 0.1)', 
-          padding: '1rem', 
-          margin: '1rem 0', 
-          borderRadius: '8px',
-          border: '1px solid rgba(255, 193, 7, 0.3)',
-          fontSize: '0.9rem'
-        }}>
-          <h3 style={{ color: '#ffc107', margin: '0 0 0.5rem 0' }}>🔍 Debug Info</h3>
-          <p><strong>Query:</strong> "{query}"</p>
-          <p><strong>Total Results:</strong> {results.length}</p>
-          <p><strong>Top 10:</strong> {top10.length}</p>
-          <p><strong>Bottom 10:</strong> {bottom10.length}</p>
-          <p><strong>View Filter:</strong> {viewFilter}</p>
-          <p><strong>Has Searched:</strong> {hasSearched ? 'Yes' : 'No'}</p>
-          <p><strong>Loading:</strong> {loading ? 'Yes' : 'No'}</p>
-          <p><strong>Error:</strong> {error || 'None'}</p>
-          {results.length > 0 && (
-            <details style={{ marginTop: '0.5rem' }}>
-              <summary style={{ cursor: 'pointer', color: '#00ffe7' }}>Ver primeros 5 resultados</summary>
-              <div style={{ marginTop: '0.5rem', textAlign: 'left' }}>
-                {results.slice(0, 5).map((item, idx) => (
-                  <div key={idx} style={{ marginBottom: '0.5rem', padding: '0.5rem', background: 'rgba(0,0,0,0.3)', borderRadius: '4px' }}>
-                    <p><strong>Título:</strong> {item?.titulo}</p>
-                    <p><strong>Sueldo:</strong> {item?.sueldo}</p>
-                    <p><strong>Ubicación:</strong> {item?.ciudadModalidad}</p>
-                  </div>
-                ))}
-              </div>
-            </details>
-          )}
-        </div>
-      )}
+     
 
       {/* Resultados filtrados */}
       {console.log('🔍 Estado antes del renderizado:', { hasSearched, loading, resultsLength: results.length, viewFilter })}
@@ -396,7 +360,7 @@ function App() {
       )}
 
       {/* Empleo seleccionado y empleos del mismo estado */}
-      {selectedJob && showNearbyJobs && (
+      {/* {selectedJob && showNearbyJobs && (
         <div className="selected-job-section">
           <div className="selected-job-card">
             <button className="close-selected-job" onClick={closeSelectedJob}>
@@ -432,7 +396,7 @@ function App() {
             )}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

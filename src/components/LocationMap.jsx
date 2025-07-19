@@ -390,7 +390,7 @@ const LocationMap = ({ onLocationSelect, jobs = [], userLocation, onJobClick }) 
         </MapContainer>
       </div>
 
-      <div className="location-instructions">
+      {/* <div className="location-instructions">
         <p>💡 <strong>Instrucciones:</strong></p>
         <ul>
           <li>Haz clic en "Obtener mi ubicación" para usar tu ubicación actual</li>
@@ -400,7 +400,7 @@ const LocationMap = ({ onLocationSelect, jobs = [], userLocation, onJobClick }) 
           <li>El marcador verde es tu ubicación actual</li>
           <li>Los empleos se agrupan por estado completo, no por ciudad específica</li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -123,7 +123,7 @@ const loadJobFile = async (filename) => {
     
     // Fallback: intentar desde el servidor de scraping
     try {
-      const serverResponse = await axios.get(`https://scrapingempleos1.vercel.app/api/vacantes?busqueda=${filename.replace('.json', '')}`);
+      const serverResponse = await axios.get(`https://scraping-empleos.onrender.com/api/vacantes?busqueda=${filename.replace('.json', '')}`);
       return serverResponse.data.data || [];
     } catch (serverError) {
       console.error(`Error cargando ${filename}:`, serverError);

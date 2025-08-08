@@ -114,12 +114,12 @@ export const getCoordinatesForEstado = (estado) => {
 
 // Función para cargar datos de un archivo específico
 const loadJobFile = async (filename) => {
-  try {
-    // Intentar cargar desde el directorio público
-    const response = await axios.get(`/jobs/${filename}`);
-    return response.data;
-  } catch (error) {
-    console.log(`No se pudo cargar ${filename} desde /jobs/, intentando desde el servidor...`);
+  // try {
+  //   // Intentar cargar desde el directorio público
+  //   const response = await axios.get(`/jobs/${filename}`);
+  //   return response.data;
+  // } catch (error) {
+  //   console.log(`No se pudo cargar ${filename} desde /jobs/, intentando desde el servidor...`);
     
     // Fallback: intentar desde el servidor de scraping
     try {
@@ -130,7 +130,7 @@ const loadJobFile = async (filename) => {
       return [];
     }
   }
-};
+
 
 // Función para obtener todos los empleos disponibles
 export const getAllJobs = async () => {

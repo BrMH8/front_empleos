@@ -3,11 +3,11 @@ import axios from 'axios';
 
 // Mapeo de archivos JSON disponibles
 const JOB_FILES = {
-  'laravel': 'vacantes-laravel.json',
-  'javascript': 'vacantes-javascript.json',
-  'php': 'vacantes-php.json',
-  'vuejs': 'vacantes-VueJS.json',
-  'desarrollador junior': 'vacantes-desarrollador junior.json'
+  'laravel': 'laravel',
+  'javascript': 'javascript',
+  'php': 'php',
+  'vuejs': 'VueJS',
+  'desarrollador junior': 'desarrollador junior'
 };
 
 // Cache para almacenar los datos cargados
@@ -123,7 +123,7 @@ const loadJobFile = async (filename) => {
     
     // Fallback: intentar desde el servidor de scraping
     try {
-      const serverResponse = await axios.get(`scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${filename}`);
+      const serverResponse = await axios.get(`https://scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${key}`);
       return serverResponse.data.data || [];
     } catch (serverError) {
       console.error(`Error cargando ${filename}:`, serverError);

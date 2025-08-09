@@ -67,7 +67,7 @@ function App() {
 
     try {
       
-      const response = await fetch(`https://scraping-empleos.onrender.com/api/vacantes?busqueda=${query.toLowerCase()}`);
+      const response = await fetch(`scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${query.toLowerCase()}`);
       if (response.ok) {
         const data = await response.json();
         console.log('📊 Datos recibidos del servidor:', data);

@@ -239,29 +239,25 @@ if (response.ok) {
       {hasSearched && !loading && results.length > 0 && (
         <div className="jobsearch-results-container">
           {viewFilter === "all" && (
-            <div className="jobsearch-results-column">
-              <h2>Todos los empleos ({results.length})</h2>
-              {console.log('🎯 Renderizando cards para viewFilter="all", total:', results.length)}
-              {results.map((item, idx) => {
-                console.log(`🎯 Renderizando card ${idx + 1}:`, item?.titulo);
-                return (
-                  <div key={idx} className="jobsearch-card">
-                    <h3 className="jobsearch-card-title">{item?.titulo}</h3>
-                    <p className="jobsearch-card-sueldo">{item?.sueldo}</p>
-                    <p className="jobsearch-card-text">{item?.horario}</p>
-                    <div className="jobsearch-card-footer">
-                      <span>{item?.ciudadModalidad}</span>
-                      {userLocation && getDistance(item?.ciudadModalidad) && (
-                        <span className="jobsearch-card-distance">
-                          📍 {getDistance(item?.ciudadModalidad).toFixed(1)} km
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+  <div className="jobsearch-results-column">
+    <h2>Todos los empleos ({results.length})</h2>
+    {results.map((item, idx) => (
+      <div key={idx} className="jobsearch-card">
+        <h3 className="jobsearch-card-title">{item?.titulo}</h3>
+        <p className="jobsearch-card-sueldo">{item?.sueldo}</p>
+        <p className="jobsearch-card-text">{item?.horario}</p>
+        <div className="jobsearch-card-footer">
+          <span>{item?.ciudadModalidad}</span>
+          {userLocation && getDistance(item?.ciudadModalidad) && (
+            <span className="jobsearch-card-distance">
+              📍 {getDistance(item?.ciudadModalidad).toFixed(1)} km
+            </span>
           )}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
 
           {viewFilter === "top" && top10.length > 0 && (
             <div className="jobsearch-results-column">

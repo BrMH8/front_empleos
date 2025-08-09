@@ -67,7 +67,7 @@ function App() {
 
     try {
       
-      const response = await fetch(`scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${query.toLowerCase()}`);
+      const response = await fetch(`https://scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${query}`);
       if (response.ok) {
         const data = await response.json();
         console.log('📊 Datos recibidos del servidor:', data);
@@ -85,7 +85,7 @@ function App() {
         console.log('❌ Servidor respondió con error, usando datos locales...');
         
         const localResults = await searchJobs(query);
-        setResults(localResults);
+        setResults(data);
         calcularTopYBottom(localResults);
       }
     } catch (err) {

@@ -68,20 +68,16 @@ function App() {
     try {
       
       const response = await fetch(`https://scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${query}`);
-      if (response.ok) {
-        const data = await response.json();
-        console.log('📊 Datos recibidos del servidor:', data);
-        console.log('📊 Total de datos en data.data:', data.data?.length || 0);
-        
-        
-        const allResults = data.data || [];
-        console.log('📊 Resultados sin filtrar:', allResults.length);
-        
-        setResults(allResults);
-        calcularTopYBottom(allResults);
-        
-        console.log('📊 Resultados finales establecidos:', allResults.length);
-      } else {
+if (response.ok) {
+  const data = await response.json();
+  console.log('📊 Datos recibidos del servidor:', data);
+  console.log('📊 Total de datos:', data.length);
+
+  setResults(data); // Usa el array directamente
+  calcularTopYBottom(data);
+
+  console.log('📊 Resultados finales establecidos:', data.length);
+} else {
         console.log('❌ Servidor respondió con error, usando datos locales...');
         
         const localResults = await searchJobs(query);

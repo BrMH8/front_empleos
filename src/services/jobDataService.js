@@ -113,41 +113,33 @@ export const getCoordinatesForEstado = (estado) => {
 };
 
 // Función para cargar datos de un archivo específico
-const loadJobFile = async (filename) => {
-  // try {
-  //   // Intentar cargar desde el directorio público
-  //   const response = await axios.get(`/jobs/${filename}`);
-  //   return response.data;
-  // } catch (error) {
-  //   console.log(`No se pudo cargar ${filename} desde /jobs/, intentando desde el servidor...`);
-    
-    // Fallback: intentar desde el servidor de scraping
-    try {
-      const serverResponse = await axios.get(`https://scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${key}`);
-      return serverResponse.data.data || [];
-    } catch (serverError) {
-      console.error(`Error cargando ${filename}:`, serverError);
-      return [];
-    }
+const loadJobFile = async (searchTerm) => {
+  try {
+    const serverResponse = await axios.get(`https://scrapingempleos-production.up.railway.app/api/vacantes?busqueda=${searchTerm}`);
+    return serverResponse.data.data || [];
+  } catch (serverError) {
+    console.error(`Error cargando ${searchTerm}:`, serverError);
+    return [];
   }
+}
 
 
 // Función para obtener todos los empleos disponibles
 export const getAllJobs = async () => {
   const allJobs = [];
   
-  for (const [key, filename] of Object.entries(JOB_FILES)) {
-    if (!jobDataCache[key]) {
-      try {
-        const jobs = await loadJobFile(filename);
-        jobDataCache[key] = jobs;
-      } catch (error) {
-        console.error(`Error cargando empleos de ${key}:`, error);
-        jobDataCache[key] = [];
-      }
+  for (const key of Object.keys(JOB_FILES)) {
+  if (!jobDataCache[key]) {
+    try {
+      const jobs = await loadJobFile(key); // Aquí pasas el término de búsqueda
+      jobDataCache[key] = jobs;
+    } catch (error) {
+      console.error(`Error cargando empleos de ${key}:`, error);
+      jobDataCache[key] = [];
     }
-    allJobs.push(...jobDataCache[key]);
   }
+  allJobs.push(...jobDataCache[key]);
+}
   
   return allJobs;
 };
